@@ -1,25 +1,61 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useRef } from "react";
+import Toolbar from "./components/Toolbar";
+import LeftMenu from "./components/LeftMenu";
+import ShapeViewport from "./components/ShapeViewPort";
+import { parseShapeFile } from "./utils/parseShapeFile";
+import "./App.css";
 
-function App() {
+const App = () => {
+  const [fileName, setFileName] = useState("");
+  const [shapes, setShapes] = useState([]);
+  const [openedFiles, setOpenedFiles] = useState([]); // Initialize as an empty array
+  const fileInputRef = useRef(null);
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const shapes = parseShapeFile(e.target.result);
+        setShapes(shapes);
+      };
+      reader.readAsText(file);
+      setFileName(file.name);
+
+      // Add file to the list of opened files
+      setOpenedFiles((prevFiles) => {
+        if (!prevFiles.includes(file.name)) {
+          return [...prevFiles, file.name];
+        }
+        return prevFiles;
+      });
+    }
+  };
+
+  const triggerFileInputClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Toolbar
+        fileName={fileName}
+        triggerFileInputClick={triggerFileInputClick}
+      />
+      <div className="main-content">
+        <LeftMenu openedFiles={openedFiles} />
+        <ShapeViewport shapes={shapes} />
+      </div>
+      <input
+        type="file"
+        ref={fileInputRef}
+        style={{ display: "none" }}
+        onChange={handleFileUpload}
+      />
     </div>
   );
-}
+};
 
 export default App;
