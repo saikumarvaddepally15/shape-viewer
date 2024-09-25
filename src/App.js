@@ -8,7 +8,7 @@ import "./App.css";
 const App = () => {
   const [fileName, setFileName] = useState("");
   const [shapes, setShapes] = useState([]);
-  const [openedFiles, setOpenedFiles] = useState([]); // Initialize as an empty array
+  const [openedFiles, setOpenedFiles] = useState([]);
   const fileInputRef = useRef(null);
 
   const handleFileUpload = (e) => {
@@ -22,7 +22,6 @@ const App = () => {
       reader.readAsText(file);
       setFileName(file.name);
 
-      // Add file to the list of opened files
       setOpenedFiles((prevFiles) => {
         if (!prevFiles.includes(file.name)) {
           return [...prevFiles, file.name];
