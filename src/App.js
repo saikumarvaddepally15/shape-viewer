@@ -16,8 +16,8 @@ const App = () => {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        const shapes = parseShapeFile(e.target.result);
-        setShapes(shapes);
+        const parsedShapes = parseShapeFile(e.target.result);
+        setShapes((prevShapes) => [...prevShapes, ...parsedShapes]);
       };
       reader.readAsText(file);
       setFileName(file.name);
@@ -37,6 +37,39 @@ const App = () => {
     }
   };
 
+  const handleShapeSubmit = (newShape) => {
+    setShapes((prevShapes) => [...prevShapes, newShape]);
+  };
+
+  const handleSaveAs = (fileName) => {
+    const shapeData = shapes
+      .map((shape) => {
+        if (shape.type === "Polygon") {
+          const points = shape.points.map((p) => `${p.x},${p.y}`).join(" ");
+          return `Polygon, ${shape.x}, ${shape.y}, ${
+            shape.zIndex || 0
+          }, [${points}], ${shape.color}`;
+        } else {
+          return `${shape.type}, ${shape.x}, ${shape.y}, ${
+            shape.zIndex || 0
+          }, ${shape.width}, ${shape.height}, ${shape.color}`;
+        }
+      })
+      .join(";\n");
+
+    const blob = new Blob([shapeData], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${fileName}.shapefile`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleReset = () => {
+    setShapes([]);
+  };
+
   return (
     <div className="app">
       <Toolbar
@@ -44,7 +77,13 @@ const App = () => {
         triggerFileInputClick={triggerFileInputClick}
       />
       <div className="main-content">
-        <LeftMenu openedFiles={openedFiles} />
+        <LeftMenu
+          openedFiles={openedFiles}
+          onShapeSubmit={handleShapeSubmit}
+          onSaveAs={handleSaveAs}
+          onReset={handleReset}
+          shapes={shapes}
+        />
         <ShapeViewport shapes={shapes} />
       </div>
       <input
