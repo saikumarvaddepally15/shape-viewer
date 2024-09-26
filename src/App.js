@@ -70,6 +70,10 @@ const App = () => {
     setShapes([]);
   };
 
+  const handleShapeUpdate = (updatedShapes) => {
+    setShapes(updatedShapes);
+  };
+
   return (
     <div className="app">
       <Toolbar
@@ -84,7 +88,7 @@ const App = () => {
           onReset={handleReset}
           shapes={shapes}
         />
-        <ShapeViewport shapes={shapes} />
+        <ShapeViewport shapes={shapes} onShapeUpdate={handleShapeUpdate} />
       </div>
       <input
         type="file"
