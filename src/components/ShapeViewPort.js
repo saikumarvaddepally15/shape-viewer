@@ -3,6 +3,12 @@ import React, { useState } from "react";
 const ShapeViewport = ({ shapes, onShapeUpdate }) => {
   const [dragging, setDragging] = useState(null);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const [tooltip, setTooltip] = useState({
+    visible: false,
+    x: 0,
+    y: 0,
+    text: "",
+  });
 
   const handleMouseDown = (e, index) => {
     const shape = shapes[index];
@@ -11,19 +17,36 @@ const ShapeViewport = ({ shapes, onShapeUpdate }) => {
       x: e.clientX - shape.x,
       y: e.clientY - shape.y,
     });
+    setTooltip({
+      visible: true,
+      x: e.clientX,
+      y: e.clientY,
+      text: `(${shape.x}, ${shape.y})`,
+    });
   };
 
   const handleMouseMove = (e) => {
     if (dragging !== null) {
       const newShapes = [...shapes];
-      newShapes[dragging].x = e.clientX - offset.x;
-      newShapes[dragging].y = e.clientY - offset.y;
+      const newX = e.clientX - offset.x;
+      const newY = e.clientY - offset.y;
+
+      newShapes[dragging].x = newX;
+      newShapes[dragging].y = newY;
       onShapeUpdate(newShapes);
+
+      setTooltip({
+        visible: true,
+        x: e.clientX + 10, // Slight offset for better visibility
+        y: e.clientY + 10,
+        text: `(${newX}, ${newY})`,
+      });
     }
   };
 
   const handleMouseUp = () => {
     setDragging(null);
+    setTooltip({ visible: false, x: 0, y: 0, text: "" });
   };
 
   return (
@@ -86,6 +109,24 @@ const ShapeViewport = ({ shapes, onShapeUpdate }) => {
           return null;
         }
       })}
+
+      {tooltip.visible && (
+        <div
+          style={{
+            position: "fixed",
+            left: `${tooltip.x}px`,
+            top: `${tooltip.y}px`,
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            color: "white",
+            padding: "4px 8px",
+            borderRadius: "4px",
+            pointerEvents: "none",
+            zIndex: 1000,
+          }}
+        >
+          {tooltip.text}
+        </div>
+      )}
     </div>
   );
 };
