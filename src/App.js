@@ -69,7 +69,12 @@ const App = () => {
 
   const handleReset = () => {
     setShapes([]);
+    setOpenedFiles([]);
+    setFileName("");
     setSelectedShapeIndex(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   const handleShapeUpdate = (updatedShapes) => {
