@@ -1,12 +1,19 @@
 import React from "react";
 
-const Toolbar = ({ fileName, triggerFileInputClick }) => {
+const Toolbar = ({ fileName, triggerFileInputClick, onRotate }) => {
   return (
     <div className="toolbar">
-      <span className="app-name">Shape Viewer</span>
-      <button className="open-file-button" onClick={triggerFileInputClick}>
-        {fileName ? fileName : "Open shape file"}
-      </button>
+      <div className="app-name">Shape Editor</div>
+      <div className="toolbar-center">
+        <button className="rotate-button" onClick={onRotate}>
+          &#x21bb; Rotate
+        </button>
+      </div>
+      <div className="toolbar-right">
+        <button className="open-file-button" onClick={triggerFileInputClick}>
+          {fileName ? fileName : "Open shape file"}
+        </button>
+      </div>
     </div>
   );
 };

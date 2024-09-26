@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const ShapeViewport = ({ shapes, onShapeUpdate }) => {
+const ShapeViewport = ({ shapes, onShapeUpdate, onShapeSelect }) => {
   const [dragging, setDragging] = useState(null);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [tooltip, setTooltip] = useState({
@@ -23,6 +23,7 @@ const ShapeViewport = ({ shapes, onShapeUpdate }) => {
       y: e.clientY,
       text: `(${shape.x}, ${shape.y})`,
     });
+    onShapeSelect(index);
   };
 
   const handleMouseMove = (e) => {
@@ -37,7 +38,7 @@ const ShapeViewport = ({ shapes, onShapeUpdate }) => {
 
       setTooltip({
         visible: true,
-        x: e.clientX + 10, // Slight offset for better visibility
+        x: e.clientX + 10,
         y: e.clientY + 10,
         text: `(${newX}, ${newY})`,
       });
@@ -62,6 +63,8 @@ const ShapeViewport = ({ shapes, onShapeUpdate }) => {
           top: `${shape.y}px`,
           zIndex: shape.zIndex,
           cursor: dragging === index ? "grabbing" : "grab",
+          transform: `rotate(${shape.rotation || 0}deg)`,
+          transformOrigin: "center",
         };
 
         if (shape.type === "Rectangle") {

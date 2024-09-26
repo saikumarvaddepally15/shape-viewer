@@ -9,6 +9,7 @@ const App = () => {
   const [fileName, setFileName] = useState("");
   const [shapes, setShapes] = useState([]);
   const [openedFiles, setOpenedFiles] = useState([]);
+  const [selectedShapeIndex, setSelectedShapeIndex] = useState(null);
   const fileInputRef = useRef(null);
 
   const handleFileUpload = (e) => {
@@ -68,10 +69,22 @@ const App = () => {
 
   const handleReset = () => {
     setShapes([]);
+    setSelectedShapeIndex(null);
   };
 
   const handleShapeUpdate = (updatedShapes) => {
     setShapes(updatedShapes);
+  };
+
+  const handleRotate = () => {
+    if (selectedShapeIndex !== null) {
+      const newShapes = [...shapes];
+      const shape = newShapes[selectedShapeIndex];
+
+      shape.rotation = (shape.rotation || 0) + 45;
+
+      handleShapeUpdate(newShapes);
+    }
   };
 
   return (
@@ -79,6 +92,7 @@ const App = () => {
       <Toolbar
         fileName={fileName}
         triggerFileInputClick={triggerFileInputClick}
+        onRotate={handleRotate}
       />
       <div className="main-content">
         <LeftMenu
@@ -88,7 +102,11 @@ const App = () => {
           onReset={handleReset}
           shapes={shapes}
         />
-        <ShapeViewport shapes={shapes} onShapeUpdate={handleShapeUpdate} />
+        <ShapeViewport
+          shapes={shapes}
+          onShapeUpdate={handleShapeUpdate}
+          onShapeSelect={setSelectedShapeIndex}
+        />
       </div>
       <input
         type="file"
