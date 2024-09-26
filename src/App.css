@@ -185,3 +185,11 @@
   outline: none;
   border-color: #1e90ff;
 }
+.shape-viewport {
+  flex-grow: 1;
+  position: relative;
+  background-color: #d3d3d3; /* Light gray background */
+  overflow: auto;
+  padding: 10px;
+  border-left: 1px solid #ddd;
+}
