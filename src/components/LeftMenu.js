@@ -27,14 +27,27 @@ const LeftMenu = ({
           openedFiles.map((file, index) => <li key={index}>{file}</li>)
         )}
       </ul>
-      <button onClick={() => setShowForm(!showForm)}>
+      <button onClick={() => setShowForm(!showForm)} className="button">
         {showForm ? "Close Form" : "Add Shape"}
       </button>
       {showForm && <ShapeForm onShapeSubmit={onShapeSubmit} />}
-      <button onClick={handleSaveAs} disabled={shapes.length === 0}>
-        Save as
+
+      <div className="tooltip-wrapper">
+        <button
+          onClick={handleSaveAs}
+          disabled={shapes.length === 0}
+          className="button"
+        >
+          Save as
+        </button>
+        {shapes.length === 0 && (
+          <span className="tooltip-text">Add shapes to save the file</span>
+        )}
+      </div>
+
+      <button onClick={onReset} className="button">
+        Reset
       </button>
-      <button onClick={onReset}>Reset</button>
     </div>
   );
 };

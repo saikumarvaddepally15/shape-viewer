@@ -32,6 +32,8 @@ const ShapeViewport = ({ shapes, onShapeUpdate, onShapeSelect }) => {
       const newX = e.clientX - offset.x;
       const newY = e.clientY - offset.y;
 
+      if (newX < 0 || newY < 0) return;
+
       newShapes[dragging].x = newX;
       newShapes[dragging].y = newY;
       onShapeUpdate(newShapes);
@@ -56,15 +58,25 @@ const ShapeViewport = ({ shapes, onShapeUpdate, onShapeSelect }) => {
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
     >
+      {shapes.length === 0 && (
+        <div className="empty-viewport-message">
+          <p>Upload shapes file or add a shape from the left menu</p>
+        </div>
+      )}
+
       {shapes.map((shape, index) => {
+        const isSelected = dragging === index;
+
         const commonStyles = {
           position: "absolute",
           left: `${shape.x}px`,
           top: `${shape.y}px`,
-          zIndex: shape.zIndex,
-          cursor: dragging === index ? "grabbing" : "grab",
+          zIndex: isSelected ? 1000 : shape.zIndex,
+          cursor: isSelected ? "grabbing" : "grab",
           transform: `rotate(${shape.rotation || 0}deg)`,
           transformOrigin: "center",
+          boxSizing: "border-box",
+          border: isSelected ? "2px dotted red" : "none",
         };
 
         if (shape.type === "Rectangle") {
@@ -86,23 +98,36 @@ const ShapeViewport = ({ shapes, onShapeUpdate, onShapeSelect }) => {
               key={index}
               style={{
                 ...commonStyles,
-                width: "0",
-                height: "0",
-                borderLeft: `${shape.width / 2}px solid transparent`,
-                borderRight: `${shape.width / 2}px solid transparent`,
-                borderBottom: `${shape.height}px solid #${shape.color}`,
+                width: `${shape.width}px`,
+                height: `${shape.height}px`,
               }}
               onMouseDown={(e) => handleMouseDown(e, index)}
-            />
+            >
+              <div
+                style={{
+                  width: "0",
+                  height: "0",
+                  borderLeft: `${shape.width / 2}px solid transparent`,
+                  borderRight: `${shape.width / 2}px solid transparent`,
+                  borderBottom: `${shape.height}px solid #${shape.color}`,
+                  position: "absolute",
+                  top: "0",
+                  left: "0",
+                  pointerEvents: "auto",
+                }}
+              />
+            </div>
           );
         } else if (shape.type === "Polygon") {
           const points = shape.points.map((p) => `${p.x},${p.y}`).join(" ");
           return (
             <svg
               key={index}
-              style={commonStyles}
-              width={Math.max(...shape.points.map((p) => p.x))}
-              height={Math.max(...shape.points.map((p) => p.y))}
+              style={{
+                ...commonStyles,
+                width: `${Math.max(...shape.points.map((p) => p.x))}px`,
+                height: `${Math.max(...shape.points.map((p) => p.y))}px`,
+              }}
               onMouseDown={(e) => handleMouseDown(e, index)}
             >
               <polygon points={points} fill={`#${shape.color}`} />
