@@ -24,7 +24,7 @@ Before you begin, ensure you have the following installed on your machine:
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/shape-viewer.git
+git clone https://github.com/saikumarvaddepally15/shape-viewer
 cd shape-viewer
 ```
 
