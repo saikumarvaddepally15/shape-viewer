@@ -143,4 +143,27 @@ As of the final iteration, there are no major known problems with the solution. 
 - **Viewport Boundary Handling**: The application currently prevents shapes from being dragged outside the viewport, but additional edge cases could be handled to improve user experience.
 - **Z-Index Handling**: While the z-index is considered, the logic might require more robust testing with complex overlapping shapes to ensure all scenarios are correctly handled.
 
+## References
+Here are some references that are used to build the projects
+
+1. **React Documentation**  
+   *React is the JavaScript library used for building the user interface of the project.*  
+   URL: [https://reactjs.org/docs/getting-started.html](https://reactjs.org/docs/getting-started.html)
+
+2. **MDN Web Docs on HTML, CSS, and JavaScript**  
+   *These resources are essential for understanding the fundamentals of web development.*  
+   URL: [https://developer.mozilla.org/](https://developer.mozilla.org/)
+
+3. **Vercel Documentation**  
+   *Guides on how to deploy a React application using Vercel, the platform used to host the project.*  
+   URL: [https://vercel.com/docs](https://vercel.com/docs)
+
+4. **Color Picker Tool**  
+   *An online tool used to generate HEX codes for colors, which was utilized in the shape form's color picker feature.*  
+   URL: [https://www.w3schools.com/colors/colors_picker.asp](https://www.w3schools.com/colors/colors_picker.asp)
+
+5. **FileReader API - MDN Web Docs**  
+   *Documentation on the FileReader API used in the project to read the contents of shape files.*  
+   URL: [https://developer.mozilla.org/en-US/docs/Web/API/FileReader](https://developer.mozilla.org/en-US/docs/Web/API/FileReader)
+
 ---
