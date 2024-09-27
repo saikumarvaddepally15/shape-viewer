@@ -80,10 +80,11 @@ The application is hosted on the Vercel platform. You can access the deployed ve
 
 The `test/` folder includes a variety of test files that represent different shape configurations. These files can be used to test the functionality of the application:
 
-- **Rectangle Test Cases**: Various rectangles with different sizes, positions, and colors.
-- **Triangle Test Cases**: Triangles with varying dimensions and colors.
-- **Polygon Test Cases**: Polygons with different numbers of sides and configurations.
-- **Mixed Shape Files**: Files that contain a mixture of rectangles, triangles, and polygons.
+- **Rectangle Test Cases**: Various rectangles with different sizes, positions, and colors.(File name - rectangle-shape-file.shapefile)
+- **Triangle Test Cases**: Triangles with varying dimensions and colors. (File name - triangle-shape-file.shapefile )
+- **Polygon Test Cases**: Polygons with different numbers of sides and configurations. (File name - polygon-shape-file.shapefile )
+- **Mixed Shape Files**: Files that contain a mixture of rectangles, triangles, and polygons. (File name - mixed-shape-file.shapefile)
+- **large dataset shape Files**: Files that contain 500+ shapes which is generated using a python script.
 
 These test files are useful for verifying that the application correctly parses and displays different types of shapes.
 
