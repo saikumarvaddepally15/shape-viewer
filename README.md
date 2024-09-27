@@ -144,7 +144,7 @@ As of the final iteration, there are no major known problems with the solution. 
 - **Z-Index Handling**: While the z-index is considered, the logic might require more robust testing with complex overlapping shapes to ensure all scenarios are correctly handled.
 
 ## References
-Here are some references that are used to build the projects
+Here are some references that are used in this project
 
 1. **React Documentation**  
    *React is the JavaScript library used for building the user interface of the project.*  
