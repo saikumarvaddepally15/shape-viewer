@@ -1,15 +1,18 @@
+/* Reset all margins, paddings, and set box-sizing */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* App Component Styling */
 .app {
   display: flex;
   flex-direction: column;
   height: 100vh;
 }
 
+/* Toolbar Component Styling */
 .toolbar {
   background-color: #333;
   color: white;
@@ -24,16 +27,19 @@
   font-weight: bold;
 }
 
+/* Center the rotate button in the toolbar */
 .toolbar-center {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
 }
 
+/* Align the open file button to the right */
 .toolbar-right {
   margin-left: auto;
 }
 
+/* Button Styling */
 .button {
   background-color: #444;
   color: white;
@@ -52,6 +58,12 @@
   background-color: #555;
 }
 
+.button:disabled {
+  background-color: #777;
+  cursor: not-allowed;
+}
+
+/* Open File Button Specific Styling */
 .open-file-button {
   background-color: #444;
   color: white;
@@ -68,6 +80,7 @@
   background-color: #555;
 }
 
+/* Rotate Button Specific Styling */
 .rotate-button {
   background-color: #444;
   color: white;
@@ -87,12 +100,14 @@
   background-color: #555;
 }
 
+/* Main Content Area Styling */
 .main-content {
   display: flex;
   flex-grow: 1;
   overflow: hidden;
 }
 
+/* LeftMenu Component Styling */
 .left-menu {
   width: 200px;
   background-color: #2a292d;
@@ -125,24 +140,6 @@
   margin-right: 10px;
 }
 
-.shape-viewport {
-  flex-grow: 1;
-  position: relative;
-  background-color: #f0f0f0;
-  overflow: auto;
-  padding: 10px;
-  border-left: 1px solid #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.empty-viewport-message {
-  font-size: 50px;
-  color: #6c2f2f;
-  text-align: center;
-  opacity: 0.7;
-}
-
 .left-menu button {
   background-color: #444;
   color: white;
@@ -158,6 +155,7 @@
 .left-menu button:hover {
   background-color: #555;
 }
+
 .left-menu button:disabled {
   background-color: #777;
   cursor: not-allowed;
@@ -194,20 +192,8 @@
   outline: none;
   border-color: #1e90ff;
 }
-.shape-viewport {
-  flex-grow: 1;
-  position: relative;
-  background-color: #d3d3d3;
-  overflow: auto;
-  padding: 10px;
-  border-left: 1px solid #ddd;
-}
 
-.button:disabled {
-  background-color: #777;
-  cursor: not-allowed;
-}
-
+/* Tooltip Styling for Save As Button */
 .tooltip-wrapper {
   position: relative;
   display: inline-block;
@@ -236,8 +222,30 @@
   opacity: 1;
 }
 
+/* Error Message Styling */
 .error {
   color: red;
   font-size: 12px;
   margin-top: 4px;
+}
+
+/* ShapeViewport Component Styling */
+.shape-viewport {
+  flex-grow: 1;
+  position: relative;
+  background-color: #d3d3d3;
+  overflow: auto;
+  padding: 10px;
+  border-left: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Message to Display When Viewport is Empty */
+.empty-viewport-message {
+  font-size: 50px;
+  color: #6c2f2f;
+  text-align: center;
+  opacity: 0.7;
 }

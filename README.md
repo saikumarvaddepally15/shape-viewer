@@ -1,70 +1,145 @@
-# Getting Started with Create React App
+---
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Shape Viewer Application
 
-## Available Scripts
+This is a React-based application for viewing, creating, and manipulating shapes on a viewport. Users can upload shape files, add new shapes, rotate shapes, and save their work. The application also supports various shape types, including rectangles, triangles, and polygons.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **Upload Shape Files**: Upload custom shape files with details about various shapes.
+- **Add Shapes**: Add new shapes (rectangles, triangles, polygons) through a form.
+- **Shape Manipulation**: Move and rotate shapes in the viewport.
+- **Save Shapes**: Save the current shapes as a `.shapefile`.
+- **Reset Viewport**: Clear the viewport and start over.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Installation
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Prerequisites
 
-### `npm test`
+Before you begin, ensure you have the following installed on your machine:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- [Node.js](https://nodejs.org/en/) (v14 or higher)
+- [npm](https://www.npmjs.com/get-npm) (v6 or higher)
 
-### `npm run build`
+### Clone the Repository
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+git clone https://github.com/your-username/shape-viewer.git
+cd shape-viewer
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Install Dependencies
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Using npm:
 
-### `npm run eject`
+```bash
+npm install
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Running the Application
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Start the Development Server
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+To start the application locally, run:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Using npm:
 
-## Learn More
+```bash
+npm start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This will start the development server and open the application in your default web browser. If it doesn’t, you can manually open [http://localhost:3000](http://localhost:3000) in your browser.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Building for Production
 
-### Code Splitting
+To build the application for production, run:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Using npm:
 
-### Analyzing the Bundle Size
+```bash
+npm run build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+This will create an optimized build of your application in the `build` directory.
 
-### Making a Progressive Web App
+## Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+The application is hosted on the Vercel platform. You can access the deployed version of this application using the following link:
 
-### Advanced Configuration
+[Shape Viewer Application](https://shape-viewer-omega.vercel.app/)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Project Structure
 
-### Deployment
+- `src/components/`: Contains all the React components used in the application.
+- `src/utils/`: Contains utility functions, including the shape file parsing logic.
+- `src/App.js`: Main application component where the overall structure and state management are handled.
+- `src/index.js`: Entry point of the application.
+- `test/`: Contains test files with different test cases for shape files.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Test Files
 
-### `npm run build` fails to minify
+The `test/` folder includes a variety of test files that represent different shape configurations. These files can be used to test the functionality of the application:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **Rectangle Test Cases**: Various rectangles with different sizes, positions, and colors.
+- **Triangle Test Cases**: Triangles with varying dimensions and colors.
+- **Polygon Test Cases**: Polygons with different numbers of sides and configurations.
+- **Mixed Shape Files**: Files that contain a mixture of rectangles, triangles, and polygons.
+
+These test files are useful for verifying that the application correctly parses and displays different types of shapes.
+
+## Usage
+
+### Uploading a Shape File
+
+Click the "Open file" button in the toolbar to upload a `.shapefile`. The shapes defined in the file will be displayed in the viewport.
+
+### Adding a New Shape
+
+Click the "Add Shape" button in the left menu to open the form. Select the shape type, fill in the details, and click "Add Shape" to add it to the viewport.
+
+### Manipulating Shapes
+
+- **Move**: Click and drag any shape to reposition it within the viewport.
+- **Rotate**: Select a shape and click the "Rotate" button in the toolbar to rotate the shape 45 degrees.
+
+### Saving Shapes
+
+Click the "Save as" button in the left menu to save the current shapes as a new `.shapefile`.
+
+### Resetting the Viewport
+
+Click the "Reset" button in the left menu to clear all shapes from the viewport and reset the application.
+
+## Additional Information
+
+### How many assignment iterations did you complete?
+
+I have completed all the iterations that are mentioned in the given document, which includes:
+1. Assignment considerations.
+2. User Interface Layout.
+3. Shape File.
+4. Shape Rendering.
+5. Polygon Support.
+6. UI Enhancement.
+
+### Did you implement any bonus features/extra features? Which ones?
+
+Yes, I have implemented all the bonus features mentioned in the assignment.
+
+#### Bonus Features:
+- **Shape Creation, Rotation, and Translation**: Added advanced manipulation features that allow users to create new shapes, rotate them, and translate (move) them across the viewport with precision.
+
+#### Extra Features:
+- **Dynamic Shape Highlighting**: The selected shape is highlighted with a dotted red border, making it easier for users to identify the shape they are working on.
+- **Color Picker**: Integrated a color picker in the shape form, allowing users to choose a color via a visual interface or by entering a hex code.
+- **Tooltip Display for Coordinates**: When a shape is moved or dragged within the viewport, a tooltip is displayed showing the current coordinates of the shape, providing real-time feedback to the user.
+- **Tooltips and Error Messages**: Implemented tooltips for disabled buttons, and error messages appear when invalid values (e.g., negative numbers) are entered in the form fields.
+- **Reset Viewport**: Clear the viewport and start over.
+
+### Are there any major known problems with the solution?
+
+As of the final iteration, there are no major known problems with the solution. However, some potential areas for further refinement include:
+- **Viewport Boundary Handling**: The application currently prevents shapes from being dragged outside the viewport, but additional edge cases could be handled to improve user experience.
+- **Z-Index Handling**: While the z-index is considered, the logic might require more robust testing with complex overlapping shapes to ensure all scenarios are correctly handled.
+
+---

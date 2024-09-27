@@ -14,25 +14,30 @@ const ShapeForm = ({ onShapeSubmit }) => {
   });
   const [errors, setErrors] = useState({});
 
+  // Function for input validation
+  const validateInput = (name, value) => {
+    let error = "";
+    if ((name === "x" || name === "y") && value < 0) {
+      error = `${name.toUpperCase()} coordinate cannot be negative`;
+    } else if (
+      (name === "width" || name === "height") &&
+      value <= 0 &&
+      shapeType !== "Polygon"
+    ) {
+      error = `${
+        name.charAt(0).toUpperCase() + name.slice(1)
+      } must be a positive number`;
+    }
+    return error;
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
-    const newErrors = { ...errors };
-
-    if (name === "x" && value < 0) {
-      newErrors.x = "X coordinate cannot be negative";
-    } else if (name === "y" && value < 0) {
-      newErrors.y = "Y coordinate cannot be negative";
-    } else if (name === "width" && value <= 0 && shapeType !== "Polygon") {
-      newErrors.width = "Width must be a positive number";
-    } else if (name === "height" && value <= 0 && shapeType !== "Polygon") {
-      newErrors.height = "Height must be a positive number";
-    } else {
-      newErrors[name] = "";
-    }
-
-    setErrors(newErrors);
+    // Validates input and update error state
+    const error = validateInput(name, value);
+    setErrors({ ...errors, [name]: error });
   };
 
   const handleColorChange = (e) => {
@@ -43,7 +48,8 @@ const ShapeForm = ({ onShapeSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (Object.keys(errors).some((key) => errors[key])) {
+    // Prevents submission if there are any validation errors
+    if (Object.values(errors).some((error) => error)) {
       return;
     }
 
@@ -93,70 +99,35 @@ const ShapeForm = ({ onShapeSubmit }) => {
           <option value="Polygon">Polygon</option>
         </select>
       </div>
-      <div>
-        <label>x:</label>
-        <input
-          type="number"
-          name="x"
-          value={formData.x}
-          onChange={handleInputChange}
-          placeholder="Enter x coordinate"
-          required
-        />
-        {errors.x && <span className="error">{errors.x}</span>}
-      </div>
-      <div>
-        <label>y:</label>
-        <input
-          type="number"
-          name="y"
-          value={formData.y}
-          onChange={handleInputChange}
-          placeholder="Enter y coordinate"
-          required
-        />
-        {errors.y && <span className="error">{errors.y}</span>}
-      </div>
-      <div>
-        <label>zIndex:</label>
-        <input
-          type="number"
-          name="zIndex"
-          value={formData.zIndex}
-          onChange={handleInputChange}
-          placeholder="Enter z-index (e.g., 0)"
-          required
-        />
-        {errors.zIndex && <span className="error">{errors.zIndex}</span>}
-      </div>
-      {shapeType !== "Polygon" && (
-        <>
-          <div>
-            <label>Width:</label>
+      {["x", "y", "zIndex"].map((field) => (
+        <div key={field}>
+          <label>{field}:</label>
+          <input
+            type="number"
+            name={field}
+            value={formData[field]}
+            onChange={handleInputChange}
+            placeholder={`Enter ${field}`}
+            required
+          />
+          {errors[field] && <span className="error">{errors[field]}</span>}
+        </div>
+      ))}
+      {shapeType !== "Polygon" &&
+        ["width", "height"].map((field) => (
+          <div key={field}>
+            <label>{field.charAt(0).toUpperCase() + field.slice(1)}:</label>
             <input
               type="number"
-              name="width"
-              value={formData.width}
+              name={field}
+              value={formData[field]}
               onChange={handleInputChange}
-              placeholder="Enter width"
+              placeholder={`Enter ${field}`}
               required
             />
-            {errors.width && <span className="error">{errors.width}</span>}
+            {errors[field] && <span className="error">{errors[field]}</span>}
           </div>
-          <div>
-            <label>Height:</label>
-            <input
-              type="number"
-              name="height"
-              value={formData.height}
-              onChange={handleInputChange}
-              placeholder="Enter height"
-              required
-            />
-            {errors.height && <span className="error">{errors.height}</span>}
-          </div>
-        </>
-      )}
+        ))}
       {shapeType === "Polygon" && (
         <div>
           <label>Points (format: x1,y1 x2,y2 ...):</label>
@@ -193,7 +164,7 @@ const ShapeForm = ({ onShapeSubmit }) => {
       </div>
       <button
         type="submit"
-        disabled={Object.keys(errors).some((key) => errors[key])}
+        disabled={Object.values(errors).some((error) => error)}
       >
         Add Shape
       </button>

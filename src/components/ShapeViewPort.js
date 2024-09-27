@@ -1,84 +1,53 @@
 import React, { useState } from "react";
+import {
+  handleMouseDown,
+  handleMouseMove,
+  handleMouseUp,
+} from "../utils/shapeViewportUtils";
 
+// Component responsible for rendering and managing the shape viewport
 const ShapeViewport = ({ shapes, onShapeUpdate, onShapeSelect }) => {
-  const [dragging, setDragging] = useState(null);
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const [dragging, setDragging] = useState(null); // Track which shape (if any) is currently being dragged
+  const [offset, setOffset] = useState({ x: 0, y: 0 }); // Track the offset between mouse position and shape position during dragging
   const [tooltip, setTooltip] = useState({
     visible: false,
     x: 0,
     y: 0,
     text: "",
-  });
-
-  const handleMouseDown = (e, index) => {
-    const shape = shapes[index];
-    setDragging(index);
-    setOffset({
-      x: e.clientX - shape.x,
-      y: e.clientY - shape.y,
-    });
-    setTooltip({
-      visible: true,
-      x: e.clientX,
-      y: e.clientY,
-      text: `(${shape.x}, ${shape.y})`,
-    });
-    onShapeSelect(index);
-  };
-
-  const handleMouseMove = (e) => {
-    if (dragging !== null) {
-      const newShapes = [...shapes];
-      const newX = e.clientX - offset.x;
-      const newY = e.clientY - offset.y;
-
-      if (newX < 0 || newY < 0) return;
-
-      newShapes[dragging].x = newX;
-      newShapes[dragging].y = newY;
-      onShapeUpdate(newShapes);
-
-      setTooltip({
-        visible: true,
-        x: e.clientX + 10,
-        y: e.clientY + 10,
-        text: `(${newX}, ${newY})`,
-      });
-    }
-  };
-
-  const handleMouseUp = () => {
-    setDragging(null);
-    setTooltip({ visible: false, x: 0, y: 0, text: "" });
-  };
+  }); // State for managing tooltip visibility and content
 
   return (
     <div
       className="shape-viewport"
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
+      onMouseMove={(e) =>
+        handleMouseMove(e, dragging, shapes, offset, onShapeUpdate, setTooltip)
+      } // Handle shape movement when dragging
+      onMouseUp={() => handleMouseUp(setDragging, setTooltip)} // Handle mouse up event to stop dragging
     >
+      {/* Display a placeholder message when there are no shapes */}
       {shapes.length === 0 && (
         <div className="empty-viewport-message">
           <p>Upload shapes file or add a shape from the left menu</p>
         </div>
       )}
 
+      {/* Map over the shapes array to render each shape */}
       {shapes.map((shape, index) => {
-        const isSelected = dragging === index;
+        const isSelected = dragging === index; // Check if the current shape is being dragged
 
         const commonStyles = {
           position: "absolute",
           left: `${shape.x}px`,
           top: `${shape.y}px`,
-          zIndex: isSelected ? 1000 : shape.zIndex,
+          zIndex: isSelected ? 1000 : shape.zIndex, // Bring the selected shape to the front
           cursor: isSelected ? "grabbing" : "grab",
           transform: `rotate(${shape.rotation || 0}deg)`,
           transformOrigin: "center",
           boxSizing: "border-box",
-          border: isSelected ? "2px dotted red" : "none",
+          border: isSelected ? "2px dotted red" : "none", // Highlight the selected shape with a red dotted border
         };
 
+        // To Render Rectangle shape
         if (shape.type === "Rectangle") {
           return (
             <div
@@ -89,10 +58,23 @@ const ShapeViewport = ({ shapes, onShapeUpdate, onShapeSelect }) => {
                 height: `${shape.height}px`,
                 backgroundColor: `#${shape.color}`,
               }}
-              onMouseDown={(e) => handleMouseDown(e, index)}
+              onMouseDown={(e) =>
+                handleMouseDown(
+                  e,
+                  index,
+                  shapes,
+                  setDragging,
+                  setOffset,
+                  setTooltip,
+                  onShapeSelect
+                )
+              } // Start dragging the shape
             />
           );
-        } else if (shape.type === "Triangle") {
+        }
+
+        // To Render Triangle shape
+        else if (shape.type === "Triangle") {
           return (
             <div
               key={index}
@@ -101,7 +83,17 @@ const ShapeViewport = ({ shapes, onShapeUpdate, onShapeSelect }) => {
                 width: `${shape.width}px`,
                 height: `${shape.height}px`,
               }}
-              onMouseDown={(e) => handleMouseDown(e, index)}
+              onMouseDown={(e) =>
+                handleMouseDown(
+                  e,
+                  index,
+                  shapes,
+                  setDragging,
+                  setOffset,
+                  setTooltip,
+                  onShapeSelect
+                )
+              } // Start dragging the shape
             >
               <div
                 style={{
@@ -113,12 +105,15 @@ const ShapeViewport = ({ shapes, onShapeUpdate, onShapeSelect }) => {
                   position: "absolute",
                   top: "0",
                   left: "0",
-                  pointerEvents: "auto",
+                  pointerEvents: "auto", // Ensure the shape is interactable
                 }}
               />
             </div>
           );
-        } else if (shape.type === "Polygon") {
+        }
+
+        // To Render Polygon shape
+        else if (shape.type === "Polygon") {
           const points = shape.points.map((p) => `${p.x},${p.y}`).join(" ");
           return (
             <svg
@@ -128,16 +123,30 @@ const ShapeViewport = ({ shapes, onShapeUpdate, onShapeSelect }) => {
                 width: `${Math.max(...shape.points.map((p) => p.x))}px`,
                 height: `${Math.max(...shape.points.map((p) => p.y))}px`,
               }}
-              onMouseDown={(e) => handleMouseDown(e, index)}
+              onMouseDown={(e) =>
+                handleMouseDown(
+                  e,
+                  index,
+                  shapes,
+                  setDragging,
+                  setOffset,
+                  setTooltip,
+                  onShapeSelect
+                )
+              } // Start dragging the shape
             >
               <polygon points={points} fill={`#${shape.color}`} />
             </svg>
           );
-        } else {
+        }
+
+        // Returns null if shape type is not recognized
+        else {
           return null;
         }
       })}
 
+      {/* Displays the tooltip with the current coordinates during dragging */}
       {tooltip.visible && (
         <div
           style={{
