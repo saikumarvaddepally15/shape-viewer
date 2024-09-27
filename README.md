@@ -84,7 +84,7 @@ The `test/` folder includes a variety of test files that represent different sha
 - **Triangle Test Cases**: Triangles with varying dimensions and colors. (File name - triangle-shape-file.shapefile )
 - **Polygon Test Cases**: Polygons with different numbers of sides and configurations. (File name - polygon-shape-file.shapefile )
 - **Mixed Shape Files**: Files that contain a mixture of rectangles, triangles, and polygons. (File name - mixed-shape-file.shapefile)
-- **large dataset shape Files**: Files that contain 500+ shapes which is generated using a python script.
+- **large dataset shape Files**: Files that contain 500+ shapes which is generated using a python script. (File name - large-testcases.shapefile)
 
 These test files are useful for verifying that the application correctly parses and displays different types of shapes.
 
